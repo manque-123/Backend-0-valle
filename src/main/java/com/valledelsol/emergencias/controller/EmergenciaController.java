@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/emergencias")
 @CrossOrigin(origins = "*") // Permite que tu frontend se conecte sin errores de CORS
