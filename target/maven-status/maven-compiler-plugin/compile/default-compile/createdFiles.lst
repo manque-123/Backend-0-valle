@@ -1,0 +1,4 @@
+com\valledelsol\emergencias\controller\EmergenciaController.class
+com\valledelsol\emergencias\EmergenciasApplication.class
+com\valledelsol\emergencias\repository\EmergenciaRepository.class
+com\valledelsol\emergencias\model\Emergencia.class
