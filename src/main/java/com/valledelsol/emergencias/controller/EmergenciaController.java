@@ -11,19 +11,17 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/emergencias")
-@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EmergenciaController {
 
     @Autowired
     private EmergenciaRepository repository;
 
-    // 1. Obtener todas las emergencias (Para mostrar los pines en el mapa)
     @GetMapping
     public List<Emergencia> listarTodo() {
         return repository.findAll();
     }
 
-    // 2. Obtener una emergencia por ID
     @GetMapping("/{id}")
     public ResponseEntity<Emergencia> obtenerPorId(@PathVariable Long id) {
         return repository.findById(id)
@@ -31,14 +29,12 @@ public class EmergenciaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 3. Crear reporte (Ruta explícita para evitar errores de barra '/' en Ionic)
     @PostMapping("/crear")
     public Emergencia guardar(@RequestBody Emergencia emergencia) {
         emergencia.setEstado("PENDIENTE");
         return repository.save(emergencia);
     }
 
-    // 4. Actualizar estado (Optimizado con Map para evitar fallos de String plano)
     @PutMapping("/{id}/estado")
     public ResponseEntity<Emergencia> actualizarEstado(@PathVariable Long id, @RequestBody Map<String, String> body) {
         return repository.findById(id)
@@ -52,7 +48,6 @@ public class EmergenciaController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 5. Eliminar reporte (Opcional, para limpieza de datos)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         return repository.findById(id)
