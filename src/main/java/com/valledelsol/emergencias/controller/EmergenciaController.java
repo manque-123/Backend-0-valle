@@ -11,21 +11,19 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/emergencias")
-@CrossOrigin(origins = "*", allowedHeaders = "*") // Permite la conexión limpia desde Ionic
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class EmergenciaController {
 
     @Autowired
     private EmergenciaRepository repository;
 
     // 1. Obtener todas las emergencias (Para mostrar los pines en el mapa)
-    // URL: GET https://backend-0-valle.onrender.com/api/emergencias
     @GetMapping
     public List<Emergencia> listarTodo() {
         return repository.findAll();
     }
 
     // 2. Obtener una emergencia por ID
-    // URL: GET https://backend-0-valle.onrender.com/api/emergencias/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Emergencia> obtenerPorId(@PathVariable Long id) {
         return repository.findById(id)
@@ -34,17 +32,13 @@ public class EmergenciaController {
     }
 
     // 3. Crear reporte (Ruta explícita para evitar errores de barra '/' en Ionic)
-    // URL: POST https://backend-0-valle.onrender.com/api/emergencias/crear
     @PostMapping("/crear")
     public Emergencia guardar(@RequestBody Emergencia emergencia) {
-        // REGLA DE NEGOCIO: El sistema asigna "PENDIENTE" por defecto
         emergencia.setEstado("PENDIENTE");
-        // La latitud, longitud y tipo vienen en el cuerpo del JSON desde el frontend
         return repository.save(emergencia);
     }
 
     // 4. Actualizar estado (Optimizado con Map para evitar fallos de String plano)
-    // URL: PUT https://backend-0-valle.onrender.com/api/emergencias/{id}/estado
     @PutMapping("/{id}/estado")
     public ResponseEntity<Emergencia> actualizarEstado(@PathVariable Long id, @RequestBody Map<String, String> body) {
         return repository.findById(id)
@@ -59,7 +53,6 @@ public class EmergenciaController {
     }
 
     // 5. Eliminar reporte (Opcional, para limpieza de datos)
-    // URL: DELETE https://backend-0-valle.onrender.com/api/emergencias/{id}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         return repository.findById(id)
