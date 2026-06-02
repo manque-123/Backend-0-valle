@@ -1,31 +1,31 @@
 package com.valledelsol.emergencias.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
-@Entity 
-@Table(name = "emergencias") 
+@Entity
+@Table(name = "emergencias")
 public class Emergencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String tipo;
-
     private String descripcion;
     private String ubicacion;
-    private Double latitud;
-    private Double longitud;
-    private String gravedad;
-    private String estado;
-    private LocalDateTime fechaReporte;
+    private String estado; // Recuerda que tu controlador le asigna "PENDIENTE" automáticamente
 
-    // Constructor vacío obligatorio para JPA
+    // --- CONSTRUCTORES ---
     public Emergencia() {}
 
-    // Getters y Setters manuales (Esto reemplaza a Lombok)
+    public Emergencia(String tipo, String descripcion, String ubicacion, String estado) {
+        this.tipo = tipo;
+        this.descripcion = descripcion;
+        this.ubicacion = ubicacion;
+        this.estado = estado;
+    }
+
+    // --- GETTERS Y SETTERS ---
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -38,23 +38,6 @@ public class Emergencia {
     public String getUbicacion() { return ubicacion; }
     public void setUbicacion(String ubicacion) { this.ubicacion = ubicacion; }
 
-    public Double getLatitud() { return latitud; }
-    public void setLatitud(Double latitud) { this.latitud = latitud; }
-
-    public Double getLongitud() { return longitud; }
-    public void setLongitud(Double longitud) { this.longitud = longitud; }
-
-    public String getGravedad() { return gravedad; }
-    public void setGravedad(String gravedad) { this.gravedad = gravedad; }
-
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
-
-    public LocalDateTime getFechaReporte() { return fechaReporte; }
-    public void setFechaReporte(LocalDateTime fechaReporte) { this.fechaReporte = fechaReporte; }
-
-    @PrePersist
-    protected void onCreate() {
-        this.fechaReporte = LocalDateTime.now();
-    }
 }
