@@ -1,0 +1,37 @@
+{
+"services": {
+"postgres": {
+"image": "postgis/postgis:16-3.4",
+"container_name": "valle_postgres",
+"environment": {
+"POSTGRES_DB": "valle_db",
+"POSTGRES_USER": "postgres",
+"POSTGRES_PASSWORD": "postgres"
+},
+"ports": [
+"5432:5432"
+],
+"volumes": [
+"valle_postgres_data:/var/lib/postgresql/data"
+]
+},
+"emergencias": {
+"image": "valle-emergencias",
+"container_name": "valle_emergencias",
+"depends_on": [
+"postgres"
+],
+"environment": {
+"SPRING_DATASOURCE_URL": "jdbc:postgresql://postgres:5432/valle_db",
+"SPRING_DATASOURCE_USERNAME": "postgres",
+"SPRING_DATASOURCE_PASSWORD": "postgres"
+},
+"ports": [
+"8081:8080"
+]
+}
+},
+"volumes": {
+"valle_postgres_data": {}
+}
+}
