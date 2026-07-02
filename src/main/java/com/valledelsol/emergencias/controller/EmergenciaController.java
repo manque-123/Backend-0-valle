@@ -50,6 +50,46 @@ public class EmergenciaController {
                         emergencia.setEstado(datos.getEstado());
                     }
 
+                    if (datos.getLatitud() != null) {
+                        emergencia.setLatitud(datos.getLatitud());
+                    }
+
+                    if (datos.getLongitud() != null) {
+                        emergencia.setLongitud(datos.getLongitud());
+                    }
+
+                    if (datos.getGravedad() != null) {
+                        emergencia.setGravedad(datos.getGravedad());
+                    }
+
+                    if (datos.getCiudadano() != null) {
+                        emergencia.setCiudadano(datos.getCiudadano());
+                    }
+
+                    if (datos.getEvidenciaFoto() != null) {
+                        emergencia.setEvidenciaFoto(datos.getEvidenciaFoto());
+                    }
+
+                    if (datos.getDerivadoA() != null) {
+                        emergencia.setDerivadoA(datos.getDerivadoA());
+                    }
+
+                    if (datos.getResponsable() != null) {
+                        emergencia.setResponsable(datos.getResponsable());
+                    }
+
+                    if (datos.getFechaDerivacion() != null) {
+                        emergencia.setFechaDerivacion(datos.getFechaDerivacion());
+                    }
+
+                    if (datos.getFechaActualizacion() != null) {
+                        emergencia.setFechaActualizacion(datos.getFechaActualizacion());
+                    }
+
+                    if (datos.getFecha() != null) {
+                        emergencia.setFecha(datos.getFecha());
+                    }
+
                     Emergencia actualizada = repository.save(emergencia);
                     return ResponseEntity.ok(actualizada);
                 })
